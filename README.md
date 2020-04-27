@@ -1,6 +1,12 @@
 # final-form-set-errors-mutator
  Mutator for setting errors outside of form (for example in redux-saga)
 
+# Installation
+
+```bush
+npm install final-form-set-errors-mutator
+```
+
 # How to use
 
 Add to form
