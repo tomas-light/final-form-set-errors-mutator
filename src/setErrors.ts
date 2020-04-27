@@ -1,4 +1,4 @@
-import { ModelState } from "@utils/validation/ModelState";
+import { ModelState } from "model-state-validation";
 import { MutableState, Mutator } from "final-form";
 
 const setErrors: Mutator = (args: any[], state: MutableState<any>) => {

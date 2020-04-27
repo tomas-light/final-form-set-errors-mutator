@@ -21,7 +21,8 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "dependencies": {
-    "final-form": "4.19.1"
+    "final-form": "4.19.1",
+    "model-state-validation": "0.8.0"
   },
   "devDependencies": {
     "tslint": "6.0.0",
