@@ -26,9 +26,7 @@ interface IMyFormProps {
     submit: (model: PasswordModel, formApi: FormApi) => void;
 }
 
-type Props = IMyFormProps;
-
-const MyForm: FunctionComponent<Props> = ({ submit }) => {
+const MyForm: FunctionComponent<IMyFormProps> = ({ submit }) => {
     return (
         <Form
             onSubmit={submit}
@@ -41,7 +39,7 @@ const MyForm: FunctionComponent<Props> = ({ submit }) => {
                             {({ input, meta }) => (
                                 <div>
                                     <label>Password</label>
-                                    <input {...input} type="text" placeholder="Password"/>
+                                    <input {...input} type="password"/>
                                     {meta.error && meta.touched && <span>{meta.error}</span>}
                                 </div>
                             )}
@@ -51,7 +49,7 @@ const MyForm: FunctionComponent<Props> = ({ submit }) => {
                             {({ input, meta }) => (
                                 <div>
                                     <label>Confirm your password</label>
-                                    <input {...input} type="password" placeholder="Confirm password"/>
+                                    <input {...input} type="password"/>
                                     {meta.error && meta.touched && <span>{meta.error}</span>}
                                 </div>
                             )}
