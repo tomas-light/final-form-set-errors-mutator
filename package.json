@@ -1,6 +1,6 @@
 {
   "name": "final-form-set-errors-mutator",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Mutator for setting errors outside of form (for example in redux-saga)",
   "contributors": [
     {

@@ -15,7 +15,6 @@ import { FormApi, FormSubscription } from "final-form";
 import React, { FunctionComponent, useState, ChangeEvent } from "react";
 import { Form, Field } from "react-final-form";
 import { setErrors } from "final-form-set-errors-mutator";
-import { TextField } from "mui-fields";
 import { ModelState } from "model-state-validation";
 
 export interface IMyFormProps {
@@ -25,14 +24,14 @@ export interface IMyFormProps {
 type Props = IMyFormProps;
 
 const MyForm: FunctionComponent<Props> = (props) => {
-    const [formApi, setFormApi] = useState<FormApi>(null);
+    const [ formApi, setFormApi ] = useState<FormApi>(null);
 
     const formSubscription: FormSubscription = {
         submitting: true,
     };
-    
-    const [password, setPassword] = useState<string>("");
-    const [confirmPassword, setConfirmPassword] = useState<string>("");
+
+    const [ password, setPassword ] = useState<string>("");
+    const [ confirmPassword, setConfirmPassword ] = useState<string>("");
 
     const handleChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
         const modelState = new ModelState();
@@ -51,7 +50,7 @@ const MyForm: FunctionComponent<Props> = (props) => {
         const modelState = new ModelState();
         if (password !== event.target.value) {
             modelState.addError(
-                "confirmPassword",
+                "confirm-password",
                 "Passwords are not equals."
             );
         }
@@ -73,18 +72,24 @@ const MyForm: FunctionComponent<Props> = (props) => {
 
                 return (
                     <form onSubmit={handleSubmit}>
-                        <Field
-                            name={"password"}
-                            component={TextField}
-                            type="password"
-                            onChange={handleChangePassword}
-                        />
-                        <Field
-                            name={"confirm-password"}
-                            component={TextField}
-                            type="password"
-                            onChange={handleChangeConfirmPassword}
-                        />
+                        <Field name="password">
+                            {({ input, meta }) => (
+                                <div>
+                                    <label>Password</label>
+                                    <input {...input} type="text" placeholder="Password" onChange={handleChangePassword}/>
+                                    {meta.error && meta.touched && <span>{meta.error}</span>}
+                                </div>
+                            )}
+                        </Field>
+                        <Field name="confirm-password">
+                            {({ input, meta }) => (
+                                <div>
+                                    <label>Confirm your password</label>
+                                    <input {...input} type="password" placeholder="Confirm password" onChange={handleChangeConfirmPassword}/>
+                                    {meta.error && meta.touched && <span>{meta.error}</span>}
+                                </div>
+                            )}
+                        </Field>
                     </form>
                 );
             }}
@@ -93,5 +98,4 @@ const MyForm: FunctionComponent<Props> = (props) => {
 };
 
 export { MyForm };
-
 ```
