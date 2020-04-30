@@ -11,81 +11,47 @@ npm install final-form-set-errors-mutator
 
 Add to form
 ```tsx
-import { FormApi, FormSubscription } from "final-form";
-import React, { FunctionComponent, useState, ChangeEvent } from "react";
+import { FormApi } from "final-form";
+import React, { FunctionComponent } from "react";
 import { Form, Field } from "react-final-form";
 import { setErrors } from "final-form-set-errors-mutator";
 import { ModelState } from "model-state-validation";
 
-export interface IMyFormProps {
-    submit: (form: any) => void;
+interface PasswordModel {
+    password: string;
+    confirmPassword: string;
+}
+
+interface IMyFormProps {
+    submit: (model: PasswordModel, formApi: FormApi) => void;
 }
 
 type Props = IMyFormProps;
 
-const MyForm: FunctionComponent<Props> = (props) => {
-    const [ formApi, setFormApi ] = useState<FormApi>(null);
-
-    const formSubscription: FormSubscription = {
-        submitting: true,
-    };
-
-    const [ password, setPassword ] = useState<string>("");
-    const [ confirmPassword, setConfirmPassword ] = useState<string>("");
-
-    const handleChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
-        const modelState = new ModelState();
-        if (event.target.value !== confirmPassword) {
-            modelState.addError(
-                "confirm-password",
-                "Passwords are not equals."
-            );
-        }
-        setPassword(event.target.value);
-
-        formApi.mutators.setErrors(modelState);
-    };
-
-    const handleChangeConfirmPassword = (event: ChangeEvent<HTMLInputElement>) => {
-        const modelState = new ModelState();
-        if (password !== event.target.value) {
-            modelState.addError(
-                "confirm-password",
-                "Passwords are not equals."
-            );
-        }
-        setConfirmPassword(event.target.value);
-
-        formApi.mutators.setErrors(modelState);
-    };
-
+const MyForm: FunctionComponent<Props> = ({ submit }) => {
     return (
         <Form
-            onSubmit={props.submit}
-            subscription={formSubscription}
-            mutators={[
-                setErrors,
-            ]}
+            onSubmit={submit}
+            mutators={[ setErrors ]}
         >
-            {({ handleSubmit, form }) => {
-                setFormApi(form);
-
+            {({ handleSubmit }) => {
                 return (
                     <form onSubmit={handleSubmit}>
                         <Field name="password">
                             {({ input, meta }) => (
                                 <div>
                                     <label>Password</label>
-                                    <input {...input} type="text" placeholder="Password" onChange={handleChangePassword}/>
+                                    <input {...input} type="text" placeholder="Password"/>
                                     {meta.error && meta.touched && <span>{meta.error}</span>}
                                 </div>
                             )}
                         </Field>
-                        <Field name="confirm-password">
+
+                        <Field name="confirmPassword">
                             {({ input, meta }) => (
                                 <div>
                                     <label>Confirm your password</label>
-                                    <input {...input} type="password" placeholder="Confirm password" onChange={handleChangeConfirmPassword}/>
+                                    <input {...input} type="password" placeholder="Confirm password"/>
                                     {meta.error && meta.touched && <span>{meta.error}</span>}
                                 </div>
                             )}
@@ -97,5 +63,25 @@ const MyForm: FunctionComponent<Props> = (props) => {
     );
 };
 
-export { MyForm };
+
+function* mySaga(action) {
+    const { model, formApi } = action.payload;
+
+    const modelState = validate(model);
+    formApi.mutators.setErrors(modelState);
+    if (modelState.isValid()) {
+        // api request or something else
+    }
+}
+
+function validate(model: PasswordModel): ModelState {
+    const modelState = new ModelState();
+    if (model.password !== model.confirmPassword) {
+        modelState.addError(
+            "confirmPassword",
+            "Passwords are not equals."
+        );
+    }
+    return modelState;
+}
 ```
