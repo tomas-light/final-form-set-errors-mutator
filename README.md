@@ -1,5 +1,7 @@
 # final-form-set-errors-mutator
- Mutator for setting errors outside of form (for example in redux-saga)
+ Mutator for setting form errors. 
+ 
+ It allows you validate your form values outside of form (for example in redux-saga).
 
 # Installation
 
