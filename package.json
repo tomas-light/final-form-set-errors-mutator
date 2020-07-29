@@ -1,6 +1,6 @@
 {
   "name": "final-form-set-errors-mutator",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Mutator for setting errors outside of form (for example in redux-saga)",
   "contributors": [
     {
@@ -20,15 +20,15 @@
   ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "dependencies": {
-    "final-form": "4.19.1",
-    "model-state-validation": "0.8.0"
-  },
   "devDependencies": {
-    "tslint": "6.0.0",
+    "tslint": "6.1.2",
     "tslint-config-prettier": "1.18.0",
     "tslint-eslint-rules": "5.4.0",
-    "typescript": "3.8.3"
+    "typescript": "3.9.7"
+  },
+  "peerDependencies": {
+    "final-form": "4.20.1",
+    "model-state-validation": "1.0.3"
   },
   "repository": {
     "type": "git",
