@@ -32,7 +32,7 @@ const MyForm: FunctionComponent<IMyFormProps> = ({ submit }) => {
     return (
         <Form
             onSubmit={submit}
-            mutators={[ setErrors ]}
+            mutators={{ setErrors }}
         >
             {({ handleSubmit }) => {
                 return (
